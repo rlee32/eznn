@@ -11,6 +11,11 @@ https://github.com/mnielsen/neural-networks-and-deep-learning/blob/master/src
 The feature vectors are obtained from the .dat files in a specified folder, 
 where each .dat file represents a single instance.
 
+## Usage
+
+The user-friendliness of the program is still under construction. Will be ready 
+soon!
+
 ## Input Representation
 
 You can store each feature vector and corresponding result in a single 
