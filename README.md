@@ -26,8 +26,8 @@ You can store each feature vector and corresponding result in a single
 You can have line breaks anywhere and use '#' for comments. For example, this 
 is also valid:  
   
-# Some comment  
-# and description  
+\# Some comment  
+\# and description  
 1  
 2  
 3  
