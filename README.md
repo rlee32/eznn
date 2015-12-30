@@ -1,21 +1,42 @@
+#eznn
+
+Easy (ez) neural network (nn). Intended to be a quick tool to see if neural networks are right for you.  
+
 ## Introduction
 
-This is a modified version of code that can be found on:  
+This is a modified, hopefully easier-to-use version of the Python code that 
+can be found on:  
 https://github.com/mnielsen/neural-networks-and-deep-learning/blob/master/src  
 
-The feature vectors are obtained from the .dat files in the vault, where each 
-.dat file represents a single instance.
+The feature vectors are obtained from the .dat files in a specified folder, 
+where each .dat file represents a single instance.
 
-## Performance
+## Input Representation
 
-At the time of writing this section, there were only 88 total instances to 
-train, validate, and test on. Still, the performance was promising. After 
-playing with the parameters a little bit, it seems that currently the 
-parameters do not affect the results that much. The training and test error are 
-usually off by a few percent or less, but occasionally you get errors on the 
-order of 10%. With more instances, I think the results will be more reliable. 
-However, much of the training data are 'near' each other in the feature set, 
-and this fact may artificially inflate the accuracies.
+You can store each feature vector and corresponding result in a single 
+.dat file. For example, if the feature vector is [1, 2, 3] and the result is 
+[0.1, 0.2], then the file will be:  
+  
+1  
+2  
+3  
+0.1  
+0.2  
+  
+You can have line breaks anywhere and use '#' for comments. For example, this 
+is also valid:  
+  
+# Some comment  
+# and description  
+1  
+2  
+3  
+  
+0.1  
+0.2  
+  
+If you store all files in a single folder, you can specify the folder path and 
+eznn will read all .dat files in the folder.  
 
 ## Scaling
 
