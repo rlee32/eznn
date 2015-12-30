@@ -44,7 +44,7 @@ The feature data must be scaled first to [0,1]. The results must also be scaled
 to [0,1]. This is handled in the feature_scaling.dat and result_scaling.dat 
 files. They both are specified as follows:
 
-<start_index>, <end_index>. <start_value>, <end_value>
+\<start_index\>, \<end_index\>, \<start_value\>, \<end_value\>
 
 So the following specification:  
 
