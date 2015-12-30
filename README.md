@@ -13,7 +13,7 @@ where each .dat file represents a single instance.
 
 ## Usage
 
-The user-friendliness of the program is still under construction. Will be ready 
+The user-friendliness of the program is still being improved. Will be ready 
 soon!
 
 ## Input Representation
