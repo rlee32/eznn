@@ -285,7 +285,7 @@ class Network(object):
         # Percent error
         results = [ ( self.feedforward(features), result ) \
             for (features, result) in data ]
-        error = [ (predicted-actual) / actual * 100 \
+        error = [ abs((predicted-actual) / actual) * 100 \
             for ( predicted, actual ) in results ]
         average_error = sum(error) / len(error)
         return average_error
