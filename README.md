@@ -19,6 +19,11 @@ soon!
 
 ## Input Representation
 
+The first row is the space-delimited input vector.
+The second row is the space-delimited output vector.
+All values must be in [0, 1].
+
+
 You can store each feature vector and corresponding result in a single 
 .dat file. For example, if the feature vector is [1, 2, 3] and the result is 
 [0.1, 0.2], then the file will be:  
