@@ -3,6 +3,10 @@
 import List
 import network2
 import Reader
+import numpy
+
+def listset2vectorset(listset):
+    return [numpy.reshape(x, (len(x), 1)) for x in listset]
 
 def Vanilla(layers, trainingData, evaluationData):
     net = network2.Network(layers, cost=network2.CrossEntropyCost)
@@ -14,7 +18,9 @@ def Vanilla(layers, trainingData, evaluationData):
 if __name__ == "__main__":
     data = Reader.ReadFolder("testdata")
     print data
-    print List.Split(data)
-    print List.Collate(List.Split(data))
-    # (training, evaluation) = List.Collate(List.Split(data))
-    # Vanilla([25, 15, 10, 3], training, evaluation)
+    data.append(data)
+    (training, evaluation) = List.Split(data)
+    print training
+    print listset2vectorset(training)
+    Vanilla([25, 15, 10, 3], \
+        listset2vectorset(training), listset2vectorset(evaluation))

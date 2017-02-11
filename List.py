@@ -12,15 +12,12 @@ def Split(data, boundary=0.5):
     i = int(boundary * len(data))
     return (data[:i], data[i:])
 
-def Collate(tupleList):
-    # Turns a list of tuple of elements into a tuple of a list of elements.
-    elements = len(tupleList[0])
-    output = []
-    for element in tupleList[0]:
-        output.append([element])
+def CollatePairs(tupleList):
+    # Turns a list of 2-tuples into a 2-tuple of lists.
+    output = ([tupleList[0][0]], [tupleList[0][1]])
     for t in tupleList[1:]:
-        for i in range(elements):
-            output[i].append(t[i])
+        output[0].append(t[0])
+        output[1].append(t[1])
     return output
 
 if __name__ == "__main__":
