@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import os
 import sys
@@ -10,6 +10,7 @@ def read_feature_vector(path, n_features):
   Reads a feature vector file with results. Assumes that there are n_features 
   first, then the rest of the file is results.
   '#' on lines denote comments.  
+  Returns a 2-tuple of lists
   """
   features = []
   results = []
@@ -142,9 +143,9 @@ if __name__ == '__main__':
   """
   Testing grounds.
   """
-  lists = read_feature_vector('../vault/v87.dat', 25)
-  nda = numpy_instance(lists)
-  print nda
+  # lists = read_feature_vector('../vault/v87.dat', 25)
+  # nda = numpy_instance(lists)
+  # print nda
 
   dats = get_all_dat_files('../vault')
   print len(dats)
