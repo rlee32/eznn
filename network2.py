@@ -170,19 +170,19 @@ class Network(object):
                 training_cost.append(cost)
                 print "Cost on training data: {}".format(cost)
             if monitor_training_accuracy:
-                accuracy = self.accuracy(training_data, convert=True)
+                accuracy = self.AverageError(training_data, convert=True)
                 training_accuracy.append(accuracy)
-                print "Accuracy on training data: {} / {}".format(
+                print "Error on training data: {} / {}".format(
                     accuracy, n)
             if monitor_evaluation_cost:
                 cost = self.total_cost(evaluation_data, lmbda, convert=True)
                 evaluation_cost.append(cost)
                 print "Cost on evaluation data: {}".format(cost)
             if monitor_evaluation_accuracy:
-                accuracy = self.accuracy(evaluation_data)
+                accuracy = self.AverageError(evaluation_data)
                 evaluation_accuracy.append(accuracy)
-                print "Accuracy on evaluation data: {} / {}".format(
-                    self.accuracy(evaluation_data), n_data)
+                print "Error on evaluation data: {} / {}".format(
+                    self.AverageError(evaluation_data), n_data)
             print
         return evaluation_cost, evaluation_accuracy, \
             training_cost, training_accuracy
@@ -217,19 +217,11 @@ class Network(object):
         activation = x
         activations = [x] # list to store all the activations, layer by layer
         zs = [] # list to store all the z vectors, layer by layer
-        print "new loop"
         for b, w in zip(self.biases, self.weights):
-            print "w:"
-            print w
-            print "activation:"
-            print activation
-            print "b:"
-            print b
             z = np.dot(w, activation)+b
             zs.append(z)
             activation = sigmoid(z)
             activations.append(activation)
-            print ""
         # backward pass
         delta = (self.cost).delta(zs[-1], activations[-1], y)
         nabla_b[-1] = delta
@@ -245,13 +237,26 @@ class Network(object):
             sp = sigmoid_prime(z)
             delta = np.dot(self.weights[-l+1].transpose(), delta) * sp
             nabla_b[-l] = delta
-            print "delta:"
-            print delta
             nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
         return (nabla_b, nabla_w)
 
+    def AverageError(self, data, convert=False):
+        """
+        Simply averages the error of the model's answer (feedforward).
+        Returns a percentage figure (0 means perfect accuracy).
+        """
+        results = [ ( self.feedforward(features), result ) \
+            for (features, result) in data ]
+        error = [ abs((predicted - actual) / actual) * 100 \
+            for (predicted, actual) in results ]
+        average_error = sum(error) / len(error)
+        return average_error
+
     def accuracy(self, data, convert=False):
-        """Return the number of inputs in ``data`` for which the neural
+        """
+        Note: I edited this to adapt it to continuously-valued output.
+
+        Return the number of inputs in ``data`` for which the neural
         network outputs the correct result. The neural network's
         output is assumed to be the index of whichever neuron in the
         final layer has the highest activation.
@@ -295,6 +300,8 @@ class Network(object):
         # Percent error
         results = [ ( self.feedforward(features), result ) \
             for (features, result) in data ]
+        print "results"
+        print results
         error = [ abs((predicted-actual) / actual) * 100 \
             for ( predicted, actual ) in results ]
         average_error = sum(error) / len(error)
