@@ -22,11 +22,7 @@ def Vanilla(layers, trainingData, evaluationData):
         monitor_training_accuracy=True)
 
 if __name__ == "__main__":
-    data = Reader.ReadFolder("testdata")
-    data += data
+    data = Reader.ReadVectorSet("../stocksim/nn/pre/amdvec.csv")
     (training, evaluation) = List.Split(data)
-    print training
-    print (listset2vectorset(training)[0][0]).shape
-    Vanilla([3, 1], \
+    Vanilla([6, 1], \
         listset2vectorset(training), listset2vectorset(evaluation))
-    # Vanilla([3, 2, 1], training, evaluation)
