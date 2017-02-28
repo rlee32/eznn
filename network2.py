@@ -152,6 +152,7 @@ class Network(object):
         are empty if the corresponding flag is not set.
 
         """
+	measurefunction = self.AverageErrorBinary
         if evaluation_data: n_data = len(evaluation_data)
         n = len(training_data)
         evaluation_cost, evaluation_accuracy = [], []
@@ -170,7 +171,7 @@ class Network(object):
                 training_cost.append(cost)
                 print "Cost on training data: {}".format(cost)
             if monitor_training_accuracy:
-                accuracy = self.AverageError(training_data, convert=True)
+                accuracy = measurefunction(training_data, convert=True)
                 training_accuracy.append(accuracy)
                 print "Error on training data: {} / {}".format(
                     accuracy, n)
@@ -179,10 +180,10 @@ class Network(object):
                 evaluation_cost.append(cost)
                 print "Cost on evaluation data: {}".format(cost)
             if monitor_evaluation_accuracy:
-                accuracy = self.AverageError(evaluation_data)
+                accuracy = measurefunction(evaluation_data)
                 evaluation_accuracy.append(accuracy)
                 print "Error on evaluation data: {} / {}".format(
-                    self.AverageError(evaluation_data), n_data)
+                    measurefunction(evaluation_data), n_data)
             print
         return evaluation_cost, evaluation_accuracy, \
             training_cost, training_accuracy
@@ -251,6 +252,23 @@ class Network(object):
             for (predicted, actual) in results ]
         average_error = sum(error) / len(error)
         return average_error
+    def AverageErrorBinary(self, data, convert=False):
+        """
+	Only takes accuracy of 'confident' predictions.
+        Returns a percentage figure (0 means perfect accuracy).
+        """
+        results = [ ( self.feedforward(features), result ) \
+            for (features, result) in data ]	
+	threshold = 0.500001
+        confidents = [(prediction, actual) for (prediction, actual) \
+	    in results if prediction >= threshold]
+	#print str(len(results)) + ", " + str(len(confidents))
+	#print confidents 
+	wrongs = [prediction for (prediction, actual) \
+	    in results if actual == 0]
+        average_error = float(len(wrongs)) / len(confidents)
+        return average_error
+
 
     def accuracy(self, data, convert=False):
         """
