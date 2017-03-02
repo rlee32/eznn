@@ -250,7 +250,9 @@ class Network(object):
             for (features, result) in data ]
         error = [ abs((predicted - actual) / actual) * 100 \
             for (predicted, actual) in results ]
-        average_error = sum(error) / len(error)
+	average_error = -1
+        if len(error) > 0:
+	    average_error = sum(error) / len(error)
         return average_error
     def AverageErrorBinary(self, data, convert=False):
         """
@@ -259,14 +261,20 @@ class Network(object):
         """
         results = [ ( self.feedforward(features), result ) \
             for (features, result) in data ]	
-	threshold = 0.500001
+	threshold = 0.4
         confidents = [(prediction, actual) for (prediction, actual) \
 	    in results if prediction >= threshold]
 	#print str(len(results)) + ", " + str(len(confidents))
 	#print confidents 
 	wrongs = [prediction for (prediction, actual) \
-	    in results if actual == 0]
-        average_error = float(len(wrongs)) / len(confidents)
+	    in confidents if actual == 0]
+	average_error = -1
+        if len(confidents) > 0:
+            average_error = float(len(wrongs)) / len(confidents)
+	else:
+            if False: 
+	        for elem in results:
+	            print elem 
         return average_error
 
 
